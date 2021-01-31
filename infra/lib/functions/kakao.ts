@@ -50,18 +50,14 @@ export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: 
       Name: 'email',
       Value: email,
     })
-    UserAttributes.push({
-      Name: 'email_verified',
-      Value: 'true'
-    })
 
-    const resp = await idp.adminCreateUser({
-      UserPoolId,
+    const resp = await idp.signUp({
+      ClientId,
       Username: email,
-      MessageAction: 'SUPPRESS',
+      Password: uuid4(),
       UserAttributes,
     }).promise()
-    Username = resp.User!.Username!
+    Username = resp.UserSub
     console.log('user is created')
 
     await idp.adminAddUserToGroup({
