@@ -4,13 +4,14 @@ This repository is about example code for creating Amazon Cognito user via kakao
 
 Deploying this cdk will provision below architeture on you AWS Account.
 
-## Signin
-![](/img/signin.png)
+**Running this repository may cost you to provision AWS resources**
 
 ## Signup
 ![](/img/signup.png)
 
-**Running this repository may cost you to provision AWS resources**
+
+## Signin
+![](/img/signin.png)
 
 # Prerequisites
 
@@ -51,6 +52,8 @@ $ cdk deploy "*" --require-approval never
 ## Web
 
 1. visit [Kakao Developer Console](https://developers.kakao.com/console/app) and create your app
+
+> Cognito requires user email to register user, so you should add email to scope on Kakao Login
 
 2. register web platform url with `http://localhost:3000`
 
