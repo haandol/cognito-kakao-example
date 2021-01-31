@@ -34,7 +34,7 @@ export class KakaoAuth extends cdk.Construct {
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_12_X,
       timeout: cdk.Duration.seconds(10),
-      memorySize: 1024,
+      memorySize: 128,
       environment: {
         USER_POOL_ID: props.userPoolId,
         CLIENT_ID: props.userPoolClientId,

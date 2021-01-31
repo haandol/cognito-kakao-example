@@ -31,7 +31,7 @@ export class CognitoUserPool extends cdk.Construct {
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_12_X,
       timeout: cdk.Duration.seconds(5),
-      memorySize: 256,
+      memorySize: 128,
     })
     const postConfirmation = new lambdaNodejs.NodejsFunction(this, `PostConfirmationFunction`, {
       functionName: `${App.Context.ns}PostConfirmTrigger`,
@@ -39,7 +39,7 @@ export class CognitoUserPool extends cdk.Construct {
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_12_X,
       timeout: cdk.Duration.seconds(5),
-      memorySize: 256,
+      memorySize: 128,
     })
 
     return {
