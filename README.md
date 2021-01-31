@@ -1,1 +1,103 @@
-# cognito-kakao
+# cognito-kakao-integration-example
+
+This repository is about example code for creating Amazon Cognito user via kakaotalk signin
+
+Deploying this cdk will provision below architeture on you AWS Account.
+
+## Signin
+![](/img/signin.png)
+
+## Signup
+![](/img/signup.png)
+
+**Running this repository may cost you to provision AWS resources**
+
+# Prerequisites
+
+- awscli
+- Nodejs 10.x+
+- Python 3.4+
+- AWS Account and Locally configured AWS credential
+
+# Installation
+
+this repository is consists of 2 parts
+
+* **infra** - provision AWS resources such as Cognito UserPool, ApiGateway, etc.
+* **web** - run Nextjs web service on locally to test Kakao signin
+
+## Infra
+
+Install project dependencies
+
+```bash
+$ cd infra
+$ npm i
+```
+
+Install cdk in global context and run `cdk init` if you did not initailize cdk yet.
+
+```bash
+$ npm i -g cdk@1.83.0
+$ cdk bootstrap
+```
+
+Deploy CDK Stacks on AWS
+
+```bash
+$ cdk deploy "*" --require-approval never
+```
+
+## Web
+
+1. visit [Kakao Developer Console](https://developers.kakao.com/console/app) and create your app
+
+2. register web platform url with `http://localhost:3000`
+
+3. enable `Kakao Login` and set redirect uri with `http://localhost:3000`
+
+4. copy `Javascript Key` on your app summary page
+
+5. open [**config.ts**](web/lib/interfaces/config.ts) and edit below variables:
+  - AmplifyConfig.UserPoolId - check out console or output of `cdk deploy` at infra
+  - AmplifyConfig.UserPoolWebClientId - check out console or output of `cdk deploy` at infra
+  - ApiHash - check out console or output of `cdk deploy` at infra
+  - IdentityProvider.Kakao - paste `Javascript Key` at Kakao Developer Console
+
+6. Install dependencies
+
+```bash
+$ cd web
+$ npm i
+```
+
+
+# Usage 
+
+1. run dev server
+
+```bash
+$ cd web
+$ npm run dev
+```
+
+2. visit http://localhost:3000 and click kakao login button
+
+3. login at redirected kakako page
+
+4. alert should be displayed
+
+5. visit **Amazon Cognito UserPool** console page
+
+6. user and group should be created
+
+![](/img/user.png)
+
+# Cleanup
+
+destroy provisioned cloud resources
+
+```bash
+$ cd infra
+$ cdk destroy "*"
+```
