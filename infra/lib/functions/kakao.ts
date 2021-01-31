@@ -56,6 +56,9 @@ export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: 
       Username: email,
       Password: uuid4(),
       UserAttributes,
+      ClientMetadata: {
+        provider: Provider,
+      }
     }).promise()
     Username = resp.UserSub
     console.log('user is created')
