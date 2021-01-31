@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core'
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2'
-import { App, Stack } from '../interfaces/config'
+import { App } from '../interfaces/config'
 
 interface Props {
   userPoolId: string
@@ -35,7 +35,7 @@ export class HttpApi extends cdk.Construct {
   }
 
   private createJWTAuthorizer(apiId: string, props: Props): apigwv2.CfnAuthorizer {
-    const { region } = Stack.Props.env
+    const { region } = App.Context
 
     const authorizer = new apigwv2.CfnAuthorizer(this, `JWTAuthorizer`, {
       apiId,
