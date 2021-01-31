@@ -8,11 +8,11 @@ export const AmplifyConfig = {
   },
 }
 
+const ApiHash = '' // TODO: replace with actual api url
+export const ApiUrl = `https://${ApiHash}.execute-api.ap-northeast-2.amazonaws.com`
+
 export const IdentityProvider = {
   Kakao: {
     Token: ``, // TODO: replace with actual kakao client id
   }
 }
-
-const ApiHash = '' // TODO: replace with actual api url
-export const ApiUrl = `https://${ApiHash}.execute-api.ap-northeast-2.amazonaws.com`
