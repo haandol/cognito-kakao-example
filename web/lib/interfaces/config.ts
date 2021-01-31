@@ -23,5 +23,5 @@ export const IdentityProvider = {
   }
 }
 
-const ApiHash = 'avfbz3y1ig' // TODO: replace with actual api url
+const ApiHash = '' // TODO: replace with actual api url
 export const ApiUrl = `https://${ApiHash}.execute-api.ap-northeast-2.amazonaws.com`
