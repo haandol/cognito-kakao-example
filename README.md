@@ -4,6 +4,8 @@ This repository is about example code for creating Amazon Cognito user via kakao
 
 Deploying this cdk will provision below architeture on you AWS Account.
 
+![](/img/architecture.png)
+
 **Running this repository may cost you to provision AWS resources**
 
 ## Signup
