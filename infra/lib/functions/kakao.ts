@@ -42,36 +42,7 @@ export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: 
     }
   }
 
-  let Username = await getUsername(email)
-  if (!Username) {
-    console.log('create new user')
-    const UserAttributes = body.user_attrs || []
-    UserAttributes.push({
-      Name: 'email',
-      Value: email,
-    })
-
-    const resp = await idp.signUp({
-      ClientId,
-      Username: email,
-      Password: uuid4(),
-      UserAttributes,
-      ClientMetadata: {
-        provider: Provider,
-      }
-    }).promise()
-    Username = resp.UserSub
-    console.log('user is created')
-
-    await idp.adminAddUserToGroup({
-      UserPoolId,
-      Username,
-      GroupName: `${UserPoolId}_${Provider}`,
-    }).promise()
-    console.log('user is added to group')
-  }
-  console.log('login user')
-
+  const Username = await getOrCreateUser(email, body.user_attrs || [])
   const Password = uuid4()
   await idp.adminSetUserPassword({
     UserPoolId,
@@ -83,6 +54,9 @@ export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: 
     UserPoolId,
     ClientId,
     AuthFlow: 'ADMIN_USER_PASSWORD_AUTH',
+    ClientMetadata: {
+      sub: Username,
+    },
     AuthParameters: {
       USERNAME: Username,
       PASSWORD: Password,
@@ -112,6 +86,46 @@ async function getUsername(username: string): Promise<string | null> {
     }
   }
   return null
+}
+
+async function getOrCreateUser(email: string, UserAttributes: IUserAttr[]): Promise<string> {
+  let Username = await getUsername(email)
+  if (!Username) {
+    console.log('create new user')
+    UserAttributes.push({
+      Name: 'email',
+      Value: email,
+    })
+    UserAttributes.push({
+      Name: 'custom:provider',
+      Value: Provider,
+    })
+    UserAttributes.push({
+      Name: 'custom:segment',
+      Value: 'developer',
+    })
+
+    const resp = await idp.signUp({
+      ClientId,
+      Username: email,
+      Password: uuid4(),
+      UserAttributes,
+      ClientMetadata: {
+        provider: Provider,
+      }
+    }).promise()
+    Username = resp.UserSub
+    console.log('user is created')
+
+    await idp.adminAddUserToGroup({
+      UserPoolId,
+      Username,
+      GroupName: `${UserPoolId}_${Provider}`,
+    }).promise()
+    console.log('user is added to group')
+  }
+
+  return Username
 }
 
 async function getKakaoEmail(accessToken: string): Promise<string> {

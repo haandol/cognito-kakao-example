@@ -41,10 +41,19 @@ export class CognitoUserPool extends cdk.Construct {
       timeout: cdk.Duration.seconds(5),
       memorySize: 128,
     })
+    const preAuthentication = new lambdaNodejs.NodejsFunction(this, `PreAuthenticationFunction`, {
+      functionName: `${App.Context.ns}PreAuthenticationTrigger`,
+      entry: path.resolve(__dirname, '..', 'functions', 'pre-authentication.ts'),
+      handler: 'handler',
+      runtime: lambda.Runtime.NODEJS_12_X,
+      timeout: cdk.Duration.seconds(5),
+      memorySize: 128,
+    })
 
     return {
       preSignup,
-      postConfirmation
+      postConfirmation,
+      preAuthentication,
     }
   }
 
@@ -58,8 +67,7 @@ export class CognitoUserPool extends cdk.Construct {
         email: { required: true },
       },
       customAttributes: {
-        agreeToPolicy: new cognito.BooleanAttribute({ mutable: true }),
-        segment: new cognito.StringAttribute({ mutable: true }),
+        provider: new cognito.StringAttribute({ mutable: true }),
       },
       passwordPolicy: {
         requireDigits: true,
