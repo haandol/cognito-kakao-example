@@ -59,7 +59,11 @@ $ cdk deploy "*" --require-approval never
 
 2. register web platform url with `http://localhost:3000`
 
+![](/img/kakao1.png)
+
 3. enable `Kakao Login` and set redirect uri with `http://localhost:3000`
+
+![](/img/kakao2.png)
 
 4. copy `Javascript Key` on your app summary page
 
