@@ -26,6 +26,16 @@ export class AuthKakaoStack extends BaseApiStack {
       method: apigwv2.HttpMethod.POST,
       handler: kakaoAuth.kakaoAuthFunction,
     })
+    this.addRoute({
+      api: props.api,
+      authorizerType: 'JWT',
+      authorizerId: props.authorizerId,
+      routeId: 'Ping',
+      path: '/ping',
+      method: apigwv2.HttpMethod.POST,
+      handler: kakaoAuth.pingFunction,
+    })
+ 
   }
 
 }
