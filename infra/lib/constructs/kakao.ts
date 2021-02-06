@@ -33,7 +33,7 @@ export class KakaoAuth extends cdk.Construct {
       entry: path.resolve(__dirname, '..', 'functions', 'kakao.ts'),
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_12_X,
-      timeout: cdk.Duration.seconds(10),
+      timeout: cdk.Duration.seconds(5),
       memorySize: 128,
       environment: {
         USER_POOL_ID: props.userPoolId,
@@ -42,7 +42,6 @@ export class KakaoAuth extends cdk.Construct {
     })
     fn.addToRolePolicy(new iam.PolicyStatement({
       actions: ['cognito-idp:*'],
-      effect: iam.Effect.ALLOW,
       resources: ['*'],
     }))
     return fn
