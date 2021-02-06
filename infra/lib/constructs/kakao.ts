@@ -13,18 +13,32 @@ export interface IProps {
 
 export class KakaoAuth extends cdk.Construct {
   public readonly kakaoAuthFunction: lambda.IFunction
+  public readonly pingFunction: lambda.IFunction
   public readonly userGroup: cognito.CfnUserPoolGroup
 
   constructor(scope: cdk.Construct, id: string, props: IProps) {
     super(scope, id)
 
     this.kakaoAuthFunction = this.createKakaoAuthFunction(props)
+    this.pingFunction = this.createPingFunction()
 
     this.userGroup = new cognito.CfnUserPoolGroup(this, `KakaoGroup`, {
       userPoolId: props.userPoolId,
       description: 'Group for users who sign in using Kakao',
       groupName: `${props.userPoolId}_Kakao`,
     })
+  }
+
+  private createPingFunction() {
+    const fn = new lambdaNodejs.NodejsFunction(this, `PingFunction`, {
+      functionName: `${App.Context.ns}Ping`,
+      entry: path.resolve(__dirname, '..', 'functions', 'ping.ts'),
+      handler: 'handler',
+      runtime: lambda.Runtime.NODEJS_12_X,
+      timeout: cdk.Duration.seconds(1),
+      memorySize: 128,
+    })
+    return fn
   }
 
   private createKakaoAuthFunction(props: IProps) {

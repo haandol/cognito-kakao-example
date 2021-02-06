@@ -20,7 +20,7 @@ export interface IBody {
 }
 
 export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: any): Promise<awsLambda.APIGatewayProxyResultV2> => {
-  console.log(event)
+  console.log(JSON.stringify(event, null, 2))
 
   if (!event.body) {
     return {
