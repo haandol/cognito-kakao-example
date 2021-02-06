@@ -32,7 +32,7 @@ export class AuthKakaoStack extends BaseApiStack {
       authorizerId: props.authorizerId,
       routeId: 'Ping',
       path: '/ping',
-      method: apigwv2.HttpMethod.POST,
+      method: apigwv2.HttpMethod.GET,
       handler: kakaoAuth.pingFunction,
     })
  
