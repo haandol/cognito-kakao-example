@@ -6,8 +6,6 @@ Deploying this cdk will provision below architeture on you AWS Account.
 
 ![](/img/architecture.png)
 
-**Running this repository may cost you to provision AWS resources**
-
 ## Signup
 ![](/img/signup.png)
 
@@ -24,7 +22,7 @@ Deploying this cdk will provision below architeture on you AWS Account.
 
 # Installation
 
-this repository is consists of 2 parts
+this repository consists of 2 parts
 
 * **infra** - provision AWS resources such as Cognito UserPool, ApiGateway, etc.
 * **web** - run Nextjs web service on locally to test Kakao signin
