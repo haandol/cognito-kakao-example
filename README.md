@@ -54,6 +54,7 @@ $ cdk deploy "*" --require-approval never
 1. visit [Kakao Developer Console](https://developers.kakao.com/console/app) and create your app
 
 > Cognito requires user email to register user, so you should add email to scope on Kakao Login
+![](/img/app_email.png)
 
 2. register web platform url with `http://localhost:3000`
 
