@@ -42,6 +42,14 @@ export const handler = async (event: awsLambda.APIGatewayProxyEventV2, context: 
     }
   }
 
+  console.log('user email: ', email)
+  if (!email) {
+    return {
+      statusCode: 500,
+      body: 'Faield to get email from Kakao, check scope of your app permission.',
+    }
+  }
+
   const Username = await getOrCreateUser(email, body.user_attrs || [])
   const Password = uuid4()
   await idp.adminSetUserPassword({
