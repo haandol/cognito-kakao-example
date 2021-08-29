@@ -5,7 +5,7 @@ import { KakaoAuth } from '../constructs/kakao'
 
 interface Props extends cdk.StackProps {
   api: apigwv2.IHttpApi
-  authorizerId: string
+  authorizer?: apigwv2.IHttpRouteAuthorizer
   userPoolId: string
   userPoolClientId: string
 }
@@ -28,8 +28,7 @@ export class AuthKakaoStack extends BaseApiStack {
     })
     this.addRoute({
       api: props.api,
-      authorizerType: 'JWT',
-      authorizerId: props.authorizerId,
+      authorizer: props.authorizer,
       routeId: 'Ping',
       path: '/ping',
       method: apigwv2.HttpMethod.GET,

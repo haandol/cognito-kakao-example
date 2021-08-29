@@ -9,8 +9,8 @@ interface Props extends cdk.StackProps {
 }
 
 export class ApiGatewayStack extends cdk.Stack {
-  public readonly api: apigwv2.HttpApi
-  public readonly requestAuthorizerId: string
+  public readonly api: apigwv2.IHttpApi
+  public readonly authorizer: apigwv2.IHttpRouteAuthorizer
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id, props)
@@ -20,15 +20,11 @@ export class ApiGatewayStack extends cdk.Stack {
       userPoolClientId: props.userPoolClientId,
     })
     this.api = httpApi.api
-    this.requestAuthorizerId = httpApi.requestAuthorizerId
+    this.authorizer = httpApi.authorizer
 
     new cdk.CfnOutput(this, `HttpApiUrl`, {
       exportName: `${App.Context.ns}HttpApiUrl`,
       value: `${httpApi.api.url}` || 'undefined',
-    })
-    new cdk.CfnOutput(this, `HttpRequestAuthorizerId`, {
-      exportName: `${App.Context.ns}HttpRequestAuthorizerId`,
-      value: httpApi.requestAuthorizerId,
     })
   }
 

@@ -19,7 +19,7 @@ apiGatewayStack.addDependency(authStack)
 
 const authKakaoStack = new AuthKakaoStack(app, `${ns}AuthKakaoStack`, {
   api: apiGatewayStack.api,
-  authorizerId: apiGatewayStack.requestAuthorizerId,
+  authorizer: apiGatewayStack.authorizer,
   userPoolId: authStack.userPool.userPoolId,
   userPoolClientId: authStack.userPoolClient.userPoolClientId,
 })

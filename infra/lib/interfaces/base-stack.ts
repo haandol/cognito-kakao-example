@@ -5,8 +5,7 @@ import * as integrations from '@aws-cdk/aws-apigatewayv2-integrations'
 
 interface RouteProps {
   api: apigwv2.IHttpApi
-  authorizerType?: 'JWT' | 'AWS_IAM'
-  authorizerId?: string
+  authorizer?: apigwv2.IHttpRouteAuthorizer
   routeId: string
   path: string
   method: apigwv2.HttpMethod
@@ -19,20 +18,12 @@ export abstract class BaseApiStack extends cdk.Stack {
   }
 
   protected addRoute(props: RouteProps) {
-    if (props.authorizerType === 'JWT' && props.authorizerId === undefined) {
-      throw Error('JWT authorizer requires authorizerId')
-    } else if (props.authorizerType === 'AWS_IAM' && props.authorizerId !== undefined) {
-      throw Error('IAM authorizer can not be configured with authorizerId')
-    }
-
     const integration = new integrations.LambdaProxyIntegration({ handler: props.handler })
-    const route = new apigwv2.HttpRoute(this, `${props.routeId}Route`, {
+    new apigwv2.HttpRoute(this, `${props.routeId}Route`, {
       httpApi: props.api,
       routeKey: apigwv2.HttpRouteKey.with(props.path, props.method),
+      authorizer: props.authorizer,
       integration,
     })
-    const routeCfn = route.node.defaultChild as apigwv2.CfnRoute
-    routeCfn.authorizationType = props.authorizerType
-    routeCfn.authorizerId = props.authorizerId
   }
 }

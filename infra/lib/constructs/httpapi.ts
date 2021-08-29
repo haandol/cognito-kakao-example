@@ -9,14 +9,13 @@ interface Props {
 
 export class HttpApi extends cdk.Construct {
   public readonly api: apigwv2.HttpApi
-  public readonly requestAuthorizerId: string
+  public readonly authorizer: apigwv2.IHttpRouteAuthorizer
 
   constructor(scope: cdk.Construct, id: string, props: Props) {
     super(scope, id)
 
     this.api = this.createHttpApi()
-    const requestAuthorizer = this.createJWTAuthorizer(this.api.httpApiId, props)
-    this.requestAuthorizerId = requestAuthorizer.ref
+    this.authorizer = this.createJWTAuthorizer(this.api, props)
   }
 
   private createHttpApi(): apigwv2.HttpApi {
@@ -24,31 +23,28 @@ export class HttpApi extends cdk.Construct {
       apiName: `${App.Context.ns}HttpApi`,
       corsPreflight: {
         allowHeaders: ['*'],
-        allowMethods: [
-          apigwv2.HttpMethod.GET, apigwv2.HttpMethod.OPTIONS,
-          apigwv2.HttpMethod.POST, apigwv2.HttpMethod.PUT,
-        ],
+        allowMethods: [apigwv2.CorsHttpMethod.ANY],
         allowOrigins: ['*'],
         maxAge: cdk.Duration.days(10),
       },
     })
   }
 
-  private createJWTAuthorizer(apiId: string, props: Props): apigwv2.CfnAuthorizer {
-    const { region } = App.Context
+  private createJWTAuthorizer(httpApi: apigwv2.IHttpApi, props: Props): apigwv2.IHttpRouteAuthorizer {
+    const region = cdk.Stack.of(this).region
 
-    const authorizer = new apigwv2.CfnAuthorizer(this, `JWTAuthorizer`, {
-      apiId,
-      authorizerType: 'JWT',
+    const authorizer = new apigwv2.HttpAuthorizer(this, `JWTAuthorizer`, {
+      authorizerName: `${App.Context.ns}JWTAuthorizer`,
+      httpApi,
+      type: apigwv2.HttpAuthorizerType.JWT,
       identitySource: ['$request.header.Authorization'],
-      name: 'JWTAuthorizer',
-      authorizerResultTtlInSeconds: 0,
-      jwtConfiguration: {
-        audience: [props.userPoolClientId],
-        issuer: `https://cognito-idp.${region}.amazonaws.com/${props.userPoolId}`,
-      }
+      jwtAudience: [props.userPoolClientId],
+      jwtIssuer: `https://cognito-idp.${region}.amazonaws.com/${props.userPoolId}`,
     })
-    return authorizer
+    return apigwv2.HttpAuthorizer.fromHttpAuthorizerAttributes(this, `JWTRouteAuthorizer`, {
+      authorizerId: authorizer.authorizerId,
+      authorizerType: apigwv2.HttpAuthorizerType.JWT,
+    })
   }
 
 }
