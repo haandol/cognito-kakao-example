@@ -108,10 +108,6 @@ async function getOrCreateUser(email: string, UserAttributes: IUserAttr[]): Prom
       Name: 'custom:provider',
       Value: Provider,
     })
-    UserAttributes.push({
-      Name: 'custom:segment',
-      Value: 'developer',
-    })
 
     const resp = await idp.signUp({
       ClientId,
