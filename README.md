@@ -69,7 +69,7 @@ $ cdk deploy "*" --require-approval never
   - AmplifyConfig.UserPoolId - check out console or output of `cdk deploy` at infra
   - AmplifyConfig.UserPoolWebClientId - check out console or output of `cdk deploy` at infra
   - ApiHash - check out console or output of `cdk deploy` at infra
-  - IdentityProvider.Kakao - paste `Javascript Key` at Kakao Developer Console
+  - IdentityProvider.Kakao.AppKey - paste `Javascript Key` at Kakao Developer Console
 
 6. Install dependencies
 

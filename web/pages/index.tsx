@@ -14,7 +14,7 @@ export default function Home() {
     if (process.browser) {
       KakaoSdk = window['Kakao']
       if (KakaoSdk && !KakaoSdk.isInitialized()) {
-        KakaoSdk.init(IdentityProvider.Kakao.Token)
+        KakaoSdk.init(IdentityProvider.Kakao.AppKey)
       }
     }
   }, [])

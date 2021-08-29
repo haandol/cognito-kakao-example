@@ -13,6 +13,6 @@ export const ApiUrl = `https://${ApiHash}.execute-api.ap-northeast-2.amazonaws.c
 
 export const IdentityProvider = {
   Kakao: {
-    Token: ``, // TODO: replace with actual kakao client id
+    AppKey: ``, // TODO: replace with actual kakao client id
   }
 }
