@@ -86,7 +86,7 @@ export class CognitoUserPool extends cdk.Construct {
     new cognito.UserPoolDomain(this, `UserPoolDomain`, {
       userPool,
       cognitoDomain: {
-        domainPrefix: App.Context.ns.toLowerCase(),
+        domainPrefix: `${App.Context.ns.toLowerCase()}${cdk.Stack.of(this).account.slice(0, 6)}`,
       },
     })
     return userPool
