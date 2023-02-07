@@ -1,8 +1,8 @@
 # cognito-kakao-integration-example
 
-This repository is an example code for creating Amazon Cognito user via kakaotalk signin
+This repository is an example code for creating Amazon Cognito user via Kakaotalk signin
 
-Deploying this cdk will provision below architeture on you AWS Account.
+Deploying this cdk will provision below resources on you AWS Account.
 
 > If you are using CDK version 1.x, please use [cdkv1 branch](https://github.com/haandol/cognito-kakao-example/tree/cdkv1)
 
@@ -19,7 +19,7 @@ Deploying this cdk will provision below architeture on you AWS Account.
 # Prerequisites
 
 - awscli
-- Nodejs 14.x+
+- Nodejs 14+
 - AWS Account and Locally configured AWS credential
 
 # Installation
@@ -38,7 +38,7 @@ $ cd infra
 $ npm i
 ```
 
-Install cdk in global context and run `cdk init` if you did not initailize cdk yet.
+Install cdk in global context and run `cdk bootstrap` if you did not initailize cdk yet.
 
 ```bash
 $ npm i -g aws-cdk
@@ -70,10 +70,10 @@ $ cdk deploy "*" --require-approval never
 
 5. open [**config.ts**](web/lib/interfaces/config.ts) and edit below variables:
 
-- AmplifyConfig.UserPoolId - check out console or output of `cdk deploy` at infra
-- AmplifyConfig.UserPoolWebClientId - check out console or output of `cdk deploy` at infra
-- ApiHash - check out console or output of `cdk deploy` at infra
-- IdentityProvider.Kakao.AppKey - paste `Javascript Key` at Kakao Developer Console
+- AmplifyConfig.UserPoolId - check out your AWS console or output of `cdk deploy` at infra
+- AmplifyConfig.UserPoolWebClientId - check out your AWS console or output of `cdk deploy` at infra
+- ApiHash - check out your AWS console or output of `cdk deploy` at infra
+- IdentityProvider.Kakao.AppKey - paste `Javascript Key` at [Kakao Developer Console](https://developers.kakao.com/console/app)
 
 6. Install dependencies
 
@@ -95,7 +95,7 @@ $ npm run dev
 
 3. login at redirected kakako page
 
-4. alert should be displayed
+4. alert should be displayed (open browser console to find the access token received from Kakaotalk)
 
 5. visit **Amazon Cognito UserPool** console page
 
