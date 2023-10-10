@@ -1,8 +1,8 @@
 # cognito-kakao-integration-example
 
-```
+`
 NOTE: according to the [link](https://devtalk.kakao.com/t/openid-connect-oidc-id-token-payload-email/122501) Kakao support OIDC (OpenID Connect). This repository is still works but not the best practice to integrate Kakao Auth to Cognito anymore. -- Use OIDC.
-```
+`
 
 This repository is an example code for creating Amazon Cognito user via Kakaotalk signin
 
