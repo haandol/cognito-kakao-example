@@ -45,7 +45,7 @@ $ npm i -g aws-cdk@2.100.0
 $ cdk bootstrap
 ```
 
-3. open [**/infra/config.ts**](infra/config/dev.toml) and replace values for your environment
+3. open [**/infra/config/dev.toml**](infra/config/dev.toml) and replace values for your environment
 
 4. copy `dev.toml` file under infra folder with name `.toml`
 
