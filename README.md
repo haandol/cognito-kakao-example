@@ -1,14 +1,10 @@
 # cognito-kakao-integration-example
 
-```
-NOTE: according to the [link](https://devtalk.kakao.com/t/openid-connect-oidc-id-token-payload-email/122501) Kakao support OIDC (OpenID Connect). This repository is still works but not the best practice to integrate Kakao Auth to Cognito anymore. -- Use OIDC.
-```
+> NOTE: according to the [link](https://devtalk.kakao.com/t/openid-connect-oidc-id-token-payload-email/122501) Kakao support OIDC (OpenID Connect). This repository is still works but not the best practice to integrate Kakao Auth to Cognito anymore. -- Use OIDC.
 
 This repository is an example code for creating Amazon Cognito user via Kakaotalk signin
 
 Deploying this cdk will provision below resources on you AWS Account.
-
-> If you are using CDK version 1.x, please use [cdkv1 branch](https://github.com/haandol/cognito-kakao-example/tree/cdkv1)
 
 ![](/img/architecture.png)
 
@@ -49,7 +45,7 @@ $ npm i -g aws-cdk@2.100.0
 $ cdk bootstrap
 ```
 
-3. open [**/infra/config.ts**](infra/config/dev.toml) and replace values for your environment
+3. open [**/infra/config/dev.toml**](infra/config/dev.toml) and replace values for your environment
 
 4. copy `dev.toml` file under infra folder with name `.toml`
 
