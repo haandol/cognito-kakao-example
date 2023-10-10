@@ -74,7 +74,7 @@ $ cdk deploy "*" --require-approval never
 
 ![](/img/kakao2.png)
 
-4. copy `Javascript Key` on your app summary page
+4. copy `Javascript Key` and `REST API Key` on your app summary page
 
 5. open [**/web/lib/interfaces/config.ts**](web/lib/interfaces/config.ts) and edit below variables:
 
