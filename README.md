@@ -86,6 +86,7 @@ $ cdk deploy "*" --require-approval never
 - AmplifyConfig.UserPoolWebClientId - check out your AWS console or output of `cdk deploy` at infra
 - ApiHash - check out your AWS console or output of `cdk deploy` at infra
 - IdentityProvider.Kakao.AppKey - paste `Javascript Key` at [Kakao Developer Console](https://developers.kakao.com/console/app)
+- IdentityProvider.Kakao.ApiKey - paste `REST API Key` at [Kakao Developer Console](https://developers.kakao.com/console/app)
 
 6. Install dependencies
 

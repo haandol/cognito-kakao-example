@@ -8,18 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
-    "amazon-cognito-identity-js": "^6.1.2",
-    "axios": "^1.3.2",
-    "next": "^13.1.6",
+    "amazon-cognito-identity-js": "^6.3.6",
+    "axios": "^1.5.1",
+    "cookies-next": "^4.0.0",
+    "next": "^13.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-kakao-button": "0.0.1",
-    "styled-components": "^5.3.6"
+    "styled-components": "^6.0.8"
   },
   "devDependencies": {
-    "@types/node": "^18.11.19",
-    "@types/react": "^18.0.27",
-    "tsconfig-paths": "^4.1.2",
-    "typescript": "^4.9.5"
+    "@types/node": "^20.8.4",
+    "@types/react": "^18.2.27",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.2.2"
   }
 }
