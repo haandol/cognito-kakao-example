@@ -6,8 +6,6 @@ This repository is an example code for creating Amazon Cognito user via Kakaotal
 
 Deploying this cdk will provision below resources on you AWS Account.
 
-> If you are using CDK version 1.x, please use [cdkv1 branch](https://github.com/haandol/cognito-kakao-example/tree/cdkv1)
-
 ![](/img/architecture.png)
 
 ## Signup
