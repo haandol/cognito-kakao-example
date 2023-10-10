@@ -1,7 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
-import { BaseApiStack } from '../interfaces/base-stack';
+import { BaseApiStack } from './base-stack';
 import { KakaoAuth } from '../constructs/kakao';
 
 interface Props extends cdk.StackProps {

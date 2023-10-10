@@ -1,5 +1,9 @@
 # cognito-kakao-integration-example
 
+```
+NOTE: according to the [link](https://devtalk.kakao.com/t/openid-connect-oidc-id-token-payload-email/122501) Kakao support OIDC (OpenID Connect). This repository is still works but not the best practice to integrate Kakao Auth to Cognito anymore. -- Use OIDC.
+```
+
 This repository is an example code for creating Amazon Cognito user via Kakaotalk signin
 
 Deploying this cdk will provision below resources on you AWS Account.
@@ -19,7 +23,7 @@ Deploying this cdk will provision below resources on you AWS Account.
 # Prerequisites
 
 - awscli
-- Nodejs 14+
+- Nodejs 16+
 - AWS Account and Locally configured AWS credential
 
 # Installation
@@ -31,21 +35,29 @@ this repository consists of 2 parts
 
 ## Infra
 
-Install project dependencies
+1. Install project dependencies
 
 ```bash
 $ cd infra
 $ npm i
 ```
 
-Install cdk in global context and run `cdk bootstrap` if you did not initailize cdk yet.
+2. Install cdk in global context and run `cdk bootstrap` if you did not initailize cdk yet.
 
 ```bash
-$ npm i -g aws-cdk
+$ npm i -g aws-cdk@2.100.0
 $ cdk bootstrap
 ```
 
-Deploy CDK Stacks on AWS
+3. open [**/infra/config.ts**](infra/config/dev.toml) and replace values for your environment
+
+4. copy `dev.toml` file under infra folder with name `.toml`
+
+```bash
+$ cp config/dev.toml .toml
+```
+
+5. Deploy CDK Stacks on AWS
 
 ```bash
 $ cdk deploy "*" --require-approval never
@@ -68,7 +80,7 @@ $ cdk deploy "*" --require-approval never
 
 4. copy `Javascript Key` on your app summary page
 
-5. open [**config.ts**](web/lib/interfaces/config.ts) and edit below variables:
+5. open [**/web/lib/interfaces/config.ts**](web/lib/interfaces/config.ts) and edit below variables:
 
 - AmplifyConfig.UserPoolId - check out your AWS console or output of `cdk deploy` at infra
 - AmplifyConfig.UserPoolWebClientId - check out your AWS console or output of `cdk deploy` at infra

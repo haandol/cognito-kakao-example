@@ -5,7 +5,6 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs';
-import { App } from '../interfaces/config';
 
 export interface IProps {
   userPoolId: string;
@@ -20,8 +19,10 @@ export class KakaoAuth extends Construct {
   constructor(scope: Construct, id: string, props: IProps) {
     super(scope, id);
 
-    this.kakaoAuthFunction = this.createKakaoAuthFunction(props);
-    this.pingFunction = this.createPingFunction();
+    const ns = this.node.tryGetContext('ns') as string;
+
+    this.kakaoAuthFunction = this.createKakaoAuthFunction(ns, props);
+    this.pingFunction = this.createPingFunction(ns);
 
     this.userGroup = new cognito.CfnUserPoolGroup(this, `KakaoGroup`, {
       userPoolId: props.userPoolId,
@@ -30,21 +31,9 @@ export class KakaoAuth extends Construct {
     });
   }
 
-  private createPingFunction() {
-    const fn = new lambdaNodejs.NodejsFunction(this, `PingFunction`, {
-      functionName: `${App.Context.ns}Ping`,
-      entry: path.resolve(__dirname, '..', 'functions', 'ping.ts'),
-      handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_16_X,
-      timeout: cdk.Duration.seconds(1),
-      memorySize: 128,
-    });
-    return fn;
-  }
-
-  private createKakaoAuthFunction(props: IProps) {
+  private createKakaoAuthFunction(ns: string, props: IProps) {
     const fn = new lambdaNodejs.NodejsFunction(this, `KakaoAuthFunction`, {
-      functionName: `${App.Context.ns}KakaoAuth`,
+      functionName: `${ns}KakaoAuth`,
       entry: path.resolve(__dirname, '..', 'functions', 'kakao.ts'),
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_16_X,
@@ -61,6 +50,18 @@ export class KakaoAuth extends Construct {
         resources: ['*'],
       })
     );
+    return fn;
+  }
+
+  private createPingFunction(ns: string) {
+    const fn = new lambdaNodejs.NodejsFunction(this, `PingFunction`, {
+      functionName: `${ns}Ping`,
+      entry: path.resolve(__dirname, '..', 'functions', 'ping.ts'),
+      handler: 'handler',
+      runtime: lambda.Runtime.NODEJS_16_X,
+      timeout: cdk.Duration.seconds(1),
+      memorySize: 128,
+    });
     return fn;
   }
 }

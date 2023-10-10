@@ -2,7 +2,6 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpApi } from '../constructs/httpapi';
-import { App } from '../interfaces/config';
 
 interface Props extends cdk.StackProps {
   userPoolId: string;
@@ -16,6 +15,8 @@ export class ApiGatewayStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id, props);
 
+    const ns = this.node.tryGetContext('ns') as string;
+
     const httpApi = new HttpApi(this, `HttpApi`, {
       userPoolId: props.userPoolId,
       userPoolClientId: props.userPoolClientId,
@@ -24,7 +25,7 @@ export class ApiGatewayStack extends cdk.Stack {
     this.authorizer = httpApi.authorizer;
 
     new cdk.CfnOutput(this, `HttpApiUrl`, {
-      exportName: `${App.Context.ns}HttpApiUrl`,
+      exportName: `${ns}HttpApiUrl`,
       value: `${httpApi.api.url}` || 'undefined',
     });
   }

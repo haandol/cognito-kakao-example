@@ -4,24 +4,38 @@ import * as cdk from 'aws-cdk-lib';
 import { ApiGatewayStack } from '../lib/stacks/apigateway-stack';
 import { AuthStack } from '../lib/stacks/auth-stack';
 import { AuthKakaoStack } from '../lib/stacks/auth-kakao-stack';
-import { App } from '../lib/interfaces/config';
+import { Config } from '../config/loader';
 
-const { ns } = App.Context;
-const app = new cdk.App({ context: App.Context });
-
-const authStack = new AuthStack(app, `${ns}AuthStack`);
-
-const apiGatewayStack = new ApiGatewayStack(app, `${ns}ApiGatewayStack`, {
-  userPoolId: authStack.userPool.userPoolId,
-  userPoolClientId: authStack.userPoolClient.userPoolClientId,
+const app = new cdk.App({
+  context: {
+    ns: Config.app.ns,
+    stage: Config.app.stage,
+  },
 });
+
+const authStack = new AuthStack(app, `${Config.app.ns}AuthStack`, {
+  redirectUri: Config.auth.redirectUri,
+});
+
+const apiGatewayStack = new ApiGatewayStack(
+  app,
+  `${Config.app.ns}ApiGatewayStack`,
+  {
+    userPoolId: authStack.userPool.userPoolId,
+    userPoolClientId: authStack.userPoolClient.userPoolClientId,
+  }
+);
 apiGatewayStack.addDependency(authStack);
 
-const authKakaoStack = new AuthKakaoStack(app, `${ns}AuthKakaoStack`, {
-  api: apiGatewayStack.api,
-  authorizer: apiGatewayStack.authorizer,
-  userPoolId: authStack.userPool.userPoolId,
-  userPoolClientId: authStack.userPoolClient.userPoolClientId,
-});
+const authKakaoStack = new AuthKakaoStack(
+  app,
+  `${Config.app.ns}AuthKakaoStack`,
+  {
+    api: apiGatewayStack.api,
+    authorizer: apiGatewayStack.authorizer,
+    userPoolId: authStack.userPool.userPoolId,
+    userPoolClientId: authStack.userPoolClient.userPoolClientId,
+  }
+);
 authKakaoStack.addDependency(authStack);
 authKakaoStack.addDependency(apiGatewayStack);

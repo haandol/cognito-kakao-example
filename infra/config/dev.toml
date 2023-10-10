@@ -1,0 +1,9 @@
+[app]
+ns="KakaoAuthDemo"
+stage="Dev"
+
+[aws]
+region="ap-northeast-2"
+
+[auth]
+redirectUri="http://localhost:3000"

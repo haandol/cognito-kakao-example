@@ -4,7 +4,10 @@ import { Construct } from 'constructs';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs';
-import { App, IdentityProvider } from '../interfaces/config';
+
+interface IProps {
+  redirectUri: string;
+}
 
 interface ITriggerFunctions {
   preSignup?: lambda.IFunction;
@@ -17,20 +20,26 @@ export class CognitoUserPool extends Construct {
   public readonly userPool: cognito.IUserPool;
   public readonly userPoolClient: cognito.IUserPoolClient;
 
-  constructor(scope: Construct, id: string) {
+  constructor(scope: Construct, id: string, props: IProps) {
     super(scope, id);
 
-    const triggerFunctions = this.createTriggerFunctions();
-    this.userPool = this.createUserPool(triggerFunctions);
-    this.userPoolClient = this.createUserPoolClient(this.userPool);
+    const ns = this.node.tryGetContext('ns') as string;
+
+    const triggerFunctions = this.createTriggerFunctions(ns);
+    this.userPool = this.createUserPool(ns, triggerFunctions);
+    this.userPoolClient = this.createUserPoolClient(
+      ns,
+      this.userPool,
+      props.redirectUri
+    );
   }
 
-  private createTriggerFunctions(): ITriggerFunctions {
+  private createTriggerFunctions(ns: string): ITriggerFunctions {
     const preSignup = new lambdaNodejs.NodejsFunction(
       this,
       `PreSignupFunction`,
       {
-        functionName: `${App.Context.ns}PreSignupTrigger`,
+        functionName: `${ns}PreSignupTrigger`,
         entry: path.resolve(__dirname, '..', 'functions', 'pre-signup.ts'),
         handler: 'handler',
         runtime: lambda.Runtime.NODEJS_16_X,
@@ -42,7 +51,7 @@ export class CognitoUserPool extends Construct {
       this,
       `PostConfirmationFunction`,
       {
-        functionName: `${App.Context.ns}PostConfirmTrigger`,
+        functionName: `${ns}PostConfirmTrigger`,
         entry: path.resolve(
           __dirname,
           '..',
@@ -59,7 +68,7 @@ export class CognitoUserPool extends Construct {
       this,
       `PreAuthenticationFunction`,
       {
-        functionName: `${App.Context.ns}PreAuthenticationTrigger`,
+        functionName: `${ns}PreAuthenticationTrigger`,
         entry: path.resolve(
           __dirname,
           '..',
@@ -80,9 +89,9 @@ export class CognitoUserPool extends Construct {
     };
   }
 
-  private createUserPool(triggerFunctions: ITriggerFunctions) {
+  private createUserPool(ns: string, triggerFunctions: ITriggerFunctions) {
     const userPool = new cognito.UserPool(this, 'UserPool', {
-      userPoolName: `${App.Context.ns}UserPool`,
+      userPoolName: `${ns}UserPool`,
       selfSignUpEnabled: true,
       signInAliases: { email: true },
       autoVerify: { email: true },
@@ -109,19 +118,19 @@ export class CognitoUserPool extends Construct {
     new cognito.UserPoolDomain(this, `UserPoolDomain`, {
       userPool,
       cognitoDomain: {
-        domainPrefix: `${App.Context.ns.toLowerCase()}${
-          cdk.Stack.of(this).account
-        }`,
+        domainPrefix: `${ns.toLowerCase()}${cdk.Stack.of(this).account}`,
       },
     });
     return userPool;
   }
 
   private createUserPoolClient(
-    userPool: cognito.IUserPool
+    ns: string,
+    userPool: cognito.IUserPool,
+    redirectUri: string
   ): cognito.IUserPoolClient {
     const userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
-      userPoolClientName: `${App.Context.ns}UserPoolClient`,
+      userPoolClientName: `${ns}UserPoolClient`,
       userPool,
       authFlows: {
         adminUserPassword: true,
@@ -131,7 +140,7 @@ export class CognitoUserPool extends Construct {
         flows: {
           implicitCodeGrant: true,
         },
-        callbackUrls: [IdentityProvider.RedirectUri],
+        callbackUrls: [redirectUri],
         scopes: [
           cognito.OAuthScope.EMAIL,
           cognito.OAuthScope.PROFILE,
