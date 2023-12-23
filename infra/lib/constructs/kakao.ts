@@ -10,7 +10,7 @@ export interface IProps {
 }
 
 export class KakaoAuth extends Construct {
-  public readonly pingFunction: lambda.IFunction;
+  public readonly checkFunction: lambda.IFunction;
   public readonly userGroup: cognito.CfnUserPoolGroup;
 
   constructor(scope: Construct, id: string, props: IProps) {
@@ -18,7 +18,7 @@ export class KakaoAuth extends Construct {
 
     const ns = this.node.tryGetContext('ns') as string;
 
-    this.pingFunction = this.createPingFunction(ns);
+    this.checkFunction = this.createCheckFunction(ns);
 
     this.userGroup = new cognito.CfnUserPoolGroup(this, `KakaoGroup`, {
       userPoolId: props.userPoolId,
@@ -27,10 +27,10 @@ export class KakaoAuth extends Construct {
     });
   }
 
-  private createPingFunction(ns: string) {
-    const fn = new lambdaNodejs.NodejsFunction(this, `PingFunction`, {
-      functionName: `${ns}Ping`,
-      entry: path.resolve(__dirname, '..', 'functions', 'ping.ts'),
+  private createCheckFunction(ns: string) {
+    const fn = new lambdaNodejs.NodejsFunction(this, `Check`, {
+      functionName: `${ns}Check`,
+      entry: path.resolve(__dirname, '..', 'functions', 'check.ts'),
       handler: 'handler',
       runtime: lambda.Runtime.NODEJS_18_X,
       architecture: lambda.Architecture.ARM_64,

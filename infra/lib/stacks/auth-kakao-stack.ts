@@ -23,10 +23,10 @@ export class AuthKakaoStack extends BaseApiStack {
     this.addRoute({
       api: props.api,
       authorizer: props.authorizer,
-      routeId: 'Ping',
-      path: '/ping',
+      routeId: 'Check',
+      path: '/check',
       method: apigwv2.HttpMethod.GET,
-      handler: kakaoAuth.pingFunction,
+      handler: kakaoAuth.checkFunction,
     });
   }
 }

@@ -61,7 +61,8 @@ export class CognitoUserPool extends Construct {
       userPool,
       oAuth: {
         flows: {
-          authorizationCodeGrant: true,
+          // authorizationCodeGrant: true,
+          implicitCodeGrant: true,
         },
         scopes: [cognito.OAuthScope.OPENID],
         callbackUrls: props.redirectUris,
