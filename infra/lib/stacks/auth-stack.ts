@@ -4,7 +4,10 @@ import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { CognitoUserPool } from '../constructs/cognito';
 
 interface IProps extends cdk.StackProps {
-  redirectUri: string;
+  clientId: string;
+  clientSecret: string;
+  scopes: string[];
+  redirectUris: string[];
 }
 
 export class AuthStack extends cdk.Stack {

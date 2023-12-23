@@ -6,4 +6,7 @@ stage="Dev"
 region="ap-northeast-2"
 
 [auth]
-redirectUri="http://localhost:3000"
+clientId="your_client_id"
+clientSecret="your_client_secret"
+scopes=["openid"]
+redirectUris=["http://localhost:3000/auth/kakaotalk/callback"]

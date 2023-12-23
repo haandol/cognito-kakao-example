@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
+import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2';
 
 interface Props {
   userPoolId: string;
@@ -27,7 +27,7 @@ export class HttpApi extends Construct {
         allowHeaders: ['*'],
         allowMethods: [apigwv2.CorsHttpMethod.ANY],
         allowOrigins: ['*'],
-        maxAge: cdk.Duration.days(10),
+        maxAge: cdk.Duration.days(7),
       },
     });
   }

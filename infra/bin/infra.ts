@@ -14,7 +14,10 @@ const app = new cdk.App({
 });
 
 const authStack = new AuthStack(app, `${Config.app.ns}AuthStack`, {
-  redirectUri: Config.auth.redirectUri,
+  clientId: Config.auth.clientId,
+  clientSecret: Config.auth.clientSecret,
+  scopes: Config.auth.scopes,
+  redirectUris: Config.auth.redirectUris,
 });
 
 const apiGatewayStack = new ApiGatewayStack(

@@ -12,7 +12,10 @@ interface IConfig {
     region: string;
   };
   auth: {
-    redirectUri: string;
+    clientId: string;
+    clientSecret: string;
+    scopes: string[];
+    redirectUris: string[];
   };
 }
 
@@ -31,7 +34,10 @@ const schema = joi
       region: joi.string().required(),
     }),
     auth: joi.object({
-      redirectUri: joi.string(),
+      clientId: joi.string().required(),
+      clientSecret: joi.string().required(),
+      scopes: joi.array().items(joi.string()).required(),
+      redirectUris: joi.array().items(joi.string().uri()).required(),
     }),
   })
   .unknown();

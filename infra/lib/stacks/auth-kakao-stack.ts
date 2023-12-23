@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
+import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2';
 import { BaseApiStack } from './base-stack';
 import { KakaoAuth } from '../constructs/kakao';
 
@@ -20,13 +20,6 @@ export class AuthKakaoStack extends BaseApiStack {
       userPoolClientId: props.userPoolClientId,
     });
 
-    this.addRoute({
-      api: props.api,
-      routeId: 'AuthKakao',
-      path: '/auth/kakao',
-      method: apigwv2.HttpMethod.POST,
-      handler: kakaoAuth.kakaoAuthFunction,
-    });
     this.addRoute({
       api: props.api,
       authorizer: props.authorizer,
