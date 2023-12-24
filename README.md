@@ -1,7 +1,5 @@
 # cognito-kakao-integration-example
 
-> NOTE: If you're looking for a solution using OIDC, please visit [oidc] branch on this repository.
-
 This repository is an example code for creating Amazon Cognito user via Kakaotalk OIDC
 
 Deploying this cdk will provision below resources on you AWS Account.
