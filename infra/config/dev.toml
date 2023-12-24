@@ -9,5 +9,5 @@ region="ap-northeast-2"
 # https://developers.kakao.com/
 clientId="" # Kakaotalk application rest api key
 clientSecret="" # Kakaotalk application secret key
-scopes=["openid"]
+scopes=["openid"] # Kakao OIDC scopes does not support "email" scope
 redirectUris=["http://localhost:3000/callback"]
