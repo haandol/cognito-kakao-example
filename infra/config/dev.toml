@@ -6,7 +6,7 @@ stage="Dev"
 region="ap-northeast-2"
 
 [auth]
-clientId="your_client_id"
-clientSecret="your_client_secret"
+clientId="kakaotalk application rest api key"
+clientSecret="kakaotalk application secret key"
 scopes=["openid"]
-redirectUris=["http://localhost:3000/auth/callback"]
+redirectUris=["http://localhost:3000/callback"]
