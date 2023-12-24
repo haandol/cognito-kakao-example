@@ -16,11 +16,11 @@ export class HttpApi extends Construct {
 
     const ns = this.node.tryGetContext('ns') as string;
 
-    this.api = this.createHttpApi(ns);
-    this.authorizer = this.createJWTAuthorizer(ns, this.api, props);
+    this.api = this.newHttpApi(ns);
+    this.authorizer = this.newJWTAuthorizer(ns, this.api, props);
   }
 
-  private createHttpApi(ns: string): apigwv2.HttpApi {
+  private newHttpApi(ns: string): apigwv2.HttpApi {
     return new apigwv2.HttpApi(this, 'HttpApi', {
       apiName: `${ns}HttpApi`,
       corsPreflight: {
@@ -32,7 +32,7 @@ export class HttpApi extends Construct {
     });
   }
 
-  private createJWTAuthorizer(
+  private newJWTAuthorizer(
     ns: string,
     httpApi: apigwv2.IHttpApi,
     props: Props

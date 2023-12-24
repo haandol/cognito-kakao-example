@@ -18,11 +18,11 @@ export class CognitoUserPool extends Construct {
 
     const ns = this.node.tryGetContext('ns') as string;
 
-    this.userPool = this.createUserPool(ns);
-    this.userPoolClient = this.createUserPoolClient(ns, this.userPool, props);
+    this.userPool = this.newUserPool(ns);
+    this.userPoolClient = this.newUserPoolClient(ns, this.userPool, props);
   }
 
-  private createUserPool(ns: string) {
+  private newUserPool(ns: string) {
     const userPool = new cognito.UserPool(this, 'UserPool', {
       userPoolName: `${ns}UserPool`,
       selfSignUpEnabled: true,
@@ -41,7 +41,7 @@ export class CognitoUserPool extends Construct {
     return userPool;
   }
 
-  private createUserPoolClient(
+  private newUserPoolClient(
     ns: string,
     userPool: cognito.IUserPool,
     props: IProps

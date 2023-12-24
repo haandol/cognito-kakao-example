@@ -19,7 +19,7 @@ export class AuthKakaoStack extends BaseApiStack {
 
     const ns = this.node.tryGetContext('ns') as string;
 
-    const checkFunction = this.createCheckFunction(ns);
+    const checkFunction = this.newCheckFunction(ns);
 
     this.addRoute({
       api: props.api,
@@ -31,7 +31,7 @@ export class AuthKakaoStack extends BaseApiStack {
     });
   }
 
-  private createCheckFunction(ns: string) {
+  private newCheckFunction(ns: string) {
     const fn = new lambdaNodejs.NodejsFunction(this, `Check`, {
       functionName: `${ns}Check`,
       entry: path.resolve(__dirname, '..', 'functions', 'check.ts'),
