@@ -1,8 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
-import * as integrations from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2';
+import * as integrations from 'aws-cdk-lib/aws-apigatewayv2-integrations';
 
 interface RouteProps {
   api: apigwv2.IHttpApi;
