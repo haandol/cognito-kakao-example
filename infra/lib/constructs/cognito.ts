@@ -29,11 +29,14 @@ export class CognitoUserPool extends Construct {
       signInAliases: { username: true },
       accountRecovery: cognito.AccountRecovery.NONE,
     });
-    new cognito.UserPoolDomain(this, `UserPoolDomain`, {
+    const domain = new cognito.UserPoolDomain(this, `UserPoolDomain`, {
       userPool,
       cognitoDomain: {
         domainPrefix: `${ns.toLowerCase()}${cdk.Stack.of(this).account}`,
       },
+    });
+    new cdk.CfnOutput(this, 'UserPoolDomainUrl', {
+      value: domain.domainName,
     });
     return userPool;
   }
