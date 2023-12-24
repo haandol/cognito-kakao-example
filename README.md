@@ -80,9 +80,9 @@ $ cdk deploy "*" --require-approval never
 1. Open [amplifyconfig.ts](./amplifyconfig.ts) and update the following values:
 
 ```ts
+DomainName; // replace with actual cognito domain address
 AuthConfig.Cognito.userPoolId; // cognito userpoolid
 AuthConfig.Cognito.userPoolClientId; // cognito clientid
-AuthConfig.Cognito.loginWith.oauth.domain; // replace with actual cognito domain address
 ```
 
 2. Open [nuxt.config.ts](./nuxt.config.ts) and update the following values:

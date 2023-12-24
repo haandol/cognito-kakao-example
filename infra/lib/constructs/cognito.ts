@@ -35,7 +35,7 @@ export class CognitoUserPool extends Construct {
         domainPrefix: `${ns.toLowerCase()}${cdk.Stack.of(this).account}`,
       },
     });
-    new cdk.CfnOutput(this, 'UserPoolDomainUrl', {
+    new cdk.CfnOutput(this, 'UserPoolDomainName', {
       value: domain.domainName,
     });
     return userPool;
