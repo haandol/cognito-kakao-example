@@ -13,7 +13,7 @@ onMounted(() => {
   if (route.hash) {
     route.hash.split('&').forEach((item) => {
       const [key, value] = item.split('=')
-      if (key === '#access_token') {
+      if (key === 'id_token') {
         accessToken.value = value
         router.push('/')
       }
