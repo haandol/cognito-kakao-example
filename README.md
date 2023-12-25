@@ -31,11 +31,11 @@ this repository consists of 2 parts
 
 ![](/img/kakao2.png)
 
-4. on the same page, Set redirect uri to `http://localhost:3000`
+> NOTE: on the same page, you should change redirect uri to cognito callback url, like `https://DOMAIN_NAME.auth.ap-northeast-2.amazoncognito.com/oauth2/idpresponse`. We will get to that later in this doc.
 
-5. visit `Security` menu and generate `Client secret code` and copy the code.
+4. visit `Security` menu and generate `Client secret code` and copy the code.
 
-6. visit `API Keys` menu and copy `REST API Key`
+5. visit `API Keys` menu and copy `REST API Key`
 
 ## Setup Infra
 
@@ -72,6 +72,16 @@ $ cp config/dev.toml .toml
 ```bash
 $ cdk deploy "*" --require-approval never
 ```
+
+## Finalize setup Kakao
+
+- visit `Kakao Login` menu and change `Redirect URI` to cognito callback url. 
+- it looks like `https://DOMAIN_NAME.auth.ap-northeast-2.amazoncognito.com/oauth2/idpresponse`
+- you can find the `DOMAIN_NAME` on the output of `cdk deploy` command or on `App Integration` Section at Cognito Web Console
+
+![redirec uri](/img/kakao_redirect_uri.png)
+
+![cognito app integration](/img/cognito_app_integration.png)
 
 ## Setup Web
 
