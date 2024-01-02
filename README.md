@@ -76,8 +76,8 @@ $ cdk deploy "*" --require-approval never
 ## Finalize setup Kakao
 
 - visit `Kakao Login` menu and change `Redirect URI` to cognito callback url.
-- it looks like `https://DOMAIN_NAME.auth.ap-northeast-2.amazoncognito.com/oauth2/idpresponse`
-- you can find the `DOMAIN_NAME` on the output of `cdk deploy` command or on `App Integration` Section at Cognito Web Console
+- the url would look like `https://DOMAIN_NAME.auth.ap-northeast-2.amazoncognito.com/oauth2/idpresponse`.
+- and you can find the `DOMAIN_NAME` on the output of `cdk deploy` command or on `App Integration` Section at Cognito Web Console
 
 ![](/img/kakao_redirect_uri.png)
 
@@ -85,7 +85,7 @@ $ cdk deploy "*" --require-approval never
 
 ## Setup Web
 
-> config values are displayed on the console after cdk deployment.
+> below amplifyconfig values will be displayed in result of running `cdk deploy` command.
 
 1. Open [amplifyconfig.ts](./amplifyconfig.ts) and update the following values:
 
