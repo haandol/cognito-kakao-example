@@ -70,6 +70,8 @@ export class CognitoUserPool extends Construct {
         scopes: [cognito.OAuthScope.OPENID],
         callbackUrls: props.redirectUris,
       },
+      accessTokenValidity: cdk.Duration.days(1),
+      idTokenValidity: cdk.Duration.days(1),
       preventUserExistenceErrors: true,
       supportedIdentityProviders: [
         cognito.UserPoolClientIdentityProvider.custom(
