@@ -1,6 +1,4 @@
-# cognito-kakao-integration-example
-
-> NOTE: If you're looking for a solution using OIDC, please visit [oidc](https://github.com/haandol/cognito-kakao-example/tree/oidc) branch on this repository.
+# cognito-kakao-oidc-integration-example
 
 This repository is an example code for creating Amazon Cognito user via Kakaotalk signin
 
